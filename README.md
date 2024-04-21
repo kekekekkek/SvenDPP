@@ -66,14 +66,14 @@ The library that was used is presented below:
 **REMEMBER**: Crashes can occur if you send too large a message to the server, or if a player writes a large message.<br>
 **REMEMBER**: Also, `SvenJect.exe` uses only the `main window` for drawing, so other `dialog boxes` currently use the standard interface.<br>
 **REMEMBER**: The `text field` has a simple implementation, so it does not have the functionality of standard `Windows` controls.<br>
-**REMEMBER**: You can click on the button ![Screenshot_12](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_11.png) to get more information on how to use editbox.<br>
+**REMEMBER**: You can click on the button ![Screenshot_11](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_11.png) to get more information on how to use editbox.<br>
 **REMEMBER**: All this functionality could have been done via `Metamod` or `SvenMod`.<br>
 **REMEMBER**: You can inject the library manually and without using `SvenJector.exe`. Only I don't know what happens if you try to inject this library into the `svends.exe` process.<br>
 
 # Screenshots
 * Screenshot 1<br><br>
-![Screenshot_13]()
+![Screenshot_12](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_12.png)
 * Screenshot 2<br><br>
-![Screenshot_14]()
+![Screenshot_13](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_13.png)
 * Screenshot 3<br><br>
-![Screenshot_15]()
+![Screenshot_14](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_14.png)
