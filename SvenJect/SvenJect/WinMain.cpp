@@ -1,0 +1,103 @@
+#include "Include.h"
+
+CVars g_Vars;
+CDraw g_Draw;
+CUtils g_Utils;
+CInput g_Input;
+CConsole g_Console;
+
+LRESULT WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+
+void Initialization(HINSTANCE hInstance)
+{
+	g_Vars.hCurInstance = hInstance;
+
+	g_Vars.iScreenSizeX = GetSystemMetrics(SM_CXSCREEN);
+	g_Vars.iScreenSizeY = GetSystemMetrics(SM_CYSCREEN);
+
+	g_Vars.hSvenJectWnd = g_Utils.CreateWnd(hInstance, &WndProc, WS_POPUP, NULL, ((g_Vars.iScreenSizeX / 2) - (g_Vars.iWndSizeW / 2)),
+		((g_Vars.iScreenSizeY / 2) - (g_Vars.iWndSizeH / 2)), g_Vars.iWndSizeW, g_Vars.iWndSizeH, "SvenJectWndClass", "SvenJector", NULL, RGB(0, 0, 0));
+
+	g_Vars.wStrToken = g_Utils.GetRegValueString(HKEY_CURRENT_USER, L"SOFTWARE\\SvenJector", L"Token");
+	g_Vars.wStrChannelId = g_Utils.GetRegValueString(HKEY_CURRENT_USER, L"SOFTWARE\\SvenJector", L"ChannelID");
+}
+
+LRESULT WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	if (uMsg == WM_SETTEXT)
+	{
+		g_Draw.bUpdateOnce = false;
+		g_Draw.bDisabled[2] = true;
+
+		MessageBoxA(hWnd, (char*)lParam, "SvenJector Info", (MB_OK | MB_ICONINFORMATION));
+		return TRUE;
+	}
+
+	if (uMsg == WM_QUIT
+		|| uMsg == WM_CLOSE
+		|| uMsg == WM_DESTROY)
+		PostQuitMessage(0x1);
+
+	if (uMsg == WM_CHAR)
+		g_Input.iCurKeyPressed = wParam;
+
+	if (uMsg == WM_KEYDOWN)
+		g_Input.iKeyPressed = wParam;
+
+	if (uMsg == WM_LBUTTONDOWN)
+	{
+		g_Input.bIsLeftMouseClicked = TRUE;
+		g_Input.bIsLeftMouseHold = TRUE;
+	}
+
+	if (uMsg == WM_RBUTTONDOWN)
+	{
+		g_Input.bIsRightMouseClicked = TRUE;
+		g_Input.bIsRightMouseHold = TRUE;
+	}
+
+	if (uMsg == WM_LBUTTONUP)
+		g_Input.bIsLeftMouseHold = FALSE;
+
+	if (uMsg == WM_RBUTTONUP)
+		g_Input.bIsRightMouseHold = FALSE;
+
+	if (uMsg == WM_MOUSEMOVE)
+	{
+		g_Input.iMousePosX = LOWORD(lParam);
+		g_Input.iMousePosY = HIWORD(lParam);
+	}
+
+	return DefWindowProcA(hWnd, uMsg, wParam, lParam);
+}
+
+BOOL WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCommandLine, int iShowWnd)
+{
+	Initialization(hInstance);
+
+	if (IsWindow(g_Vars.hSvenJectWnd))
+	{
+		ShowWindow(g_Vars.hSvenJectWnd, SHOW_OPENWINDOW);
+		UpdateWindow(g_Vars.hSvenJectWnd);
+
+		while (true)
+		{
+			MSG msMsg;
+			if (PeekMessageA(&msMsg, NULL, NULL, NULL, PM_REMOVE))
+			{
+				TranslateMessage(&msMsg);
+				DispatchMessageA(&msMsg);
+
+				if (msMsg.message == WM_QUIT)
+					break;
+			}
+
+			g_Draw.DrawMainFrame(g_Vars.hSvenJectWnd);
+			g_Input.DragWindow(g_Vars.hSvenJectWnd, g_Vars.iWndSizeW, g_Vars.iWndSizeH, g_Vars.iScreenSizeX, g_Vars.iScreenSizeY);
+		}
+	}
+	else
+		MessageBoxA(NULL, "Couldn't create a window! Try to restart the program.", "SvenJector Error", (MB_OK | MB_ICONERROR));
+
+	return TRUE;
+}
