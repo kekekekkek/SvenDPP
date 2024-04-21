@@ -733,7 +733,9 @@ void CDraw::DrawEdit(HWND hWnd, RECT rcRect, int iSize, int iNum, wstring wStrTe
 			ResetFocus();
 			bFocus[iNum] = true;
 
-			MessageBoxW(g_Vars.hSvenJectWnd, wStrInput.c_str(), (L"SvenJector (" + wStrText + L")").c_str(), (MB_OK | MB_ICONINFORMATION));
+			if (!wStrInput.empty())
+				MessageBoxW(g_Vars.hSvenJectWnd, wStrInput.c_str(), (L"SvenJector (" + wStrText + L")").c_str(), (MB_OK | MB_ICONINFORMATION));
+
 			g_Input.bIsRightMouseHold = FALSE;
 		}
 
@@ -790,7 +792,10 @@ void CDraw::DrawEdit(HWND hWnd, RECT rcRect, int iSize, int iNum, wstring wStrTe
 								wStrInput += g_Input.iCurKeyPressed;
 						}
 						else
-							wStrInput += g_Input.iCurKeyPressed;
+						{
+							if (g_Input.GetCurKey() != VK_TAB)
+								wStrInput += g_Input.iCurKeyPressed;
+						}
 					}
 				}
 
