@@ -25,7 +25,7 @@ Installing the plugin consists of several steps:
 11. Now you need to create or select an existing `channel` and `copy` its link. In the `link`, you will need to `copy` the `last digits` and `save` to the same file where you saved the bot token;<br><br>
 ![Screenshot_7](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_7.png)<br><br>
 ![Screenshot_8](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_8.png)<br><br>
-12. After these steps, run the `SvenJect.exe` program. In the `Token` text field specify the bot token. In the `Channel ID` text field specify the `channel number`. You can do this using the keys `Ctrl + C` and `Ctrl + V`. The result of copy and paste should look like this:<br><br>
+12. After these steps, run the `SvenJect.exe` program. In the `Token` text field specify the `bot token`. In the `Channel ID` text field specify the `channel number`. You can do this using the keys `Ctrl + C` and `Ctrl + V`. The result of copy and paste should look like this:<br><br>
 ![Screenshot_9](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_9.png)<br><br>
 13. Now start the game and create your server. You can simply use the command in the console: `map %mapname%`;
 14. Once the server has been fully loaded, go to the `SvenJect.exe` program and click on the `Load` button;
