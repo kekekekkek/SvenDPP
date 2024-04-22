@@ -54,7 +54,11 @@ Currently there is only one `!send` command available to the bot. There are plan
 * Also, the `SvenDPP.dll` library uses the `OutputDebugString` function hook, so duplicate messages or messages logged by the game may appear on your server in `Discord`;
 * Also in the `Discord` server can be output commands that the player uses in his console. The best option is to use the `SayText` function hook, which will only display messages when the player writes something in the chat. This method will be used in the future;
 * There are also font display issues on older Windows. The window system menu uses `Unicode` characters as text. For example:<br><br>
-![Screenshot_10](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_10.png)
+![Screenshot_10](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_10.png)<br><br>
+The `Load`, `Save` and `Cancel` buttons are used for the following purposes:
+* `Load` - used to inject the module into the game process. If your game will not run or there is any error during injection, the program will show you `MessageBox` with the error text;
+* `Save` - used to save entered values to text fields. All values are saved in the system registry;
+* `Cancel` - used to close the program. You can also close it by pressing the `X` button or the `Escape` key.
 ### [+] About the library used:
 The library that was used is presented below:
 1. Library repository - https://github.com/brainboxdotcc/DPP;
