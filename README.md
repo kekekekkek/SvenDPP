@@ -57,7 +57,7 @@ Currently there is only one `!send` command available to the bot. There are plan
 ![Screenshot_10](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_10.png)<br><br>
 The `Load`, `Save` and `Cancel` buttons are used for the following purposes:
 * `Load` - used to inject the module into the game process. If your game will not run or there is any error during injection, the program will show you `MessageBox` with the error text;
-* `Save` - used to save entered values to text fields. All values are saved in the system registry;
+* `Save` - used to save entered values to text fields. All values are saved in the system registry. Also, field values are saved automatically when you click the `Load` button;
 * `Cancel` - used to close the program. You can also close it by pressing the `X` button or the `Escape` key.
 ### [+] About the library used:
 The library that was used is presented below:
