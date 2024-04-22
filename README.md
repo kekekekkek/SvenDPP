@@ -51,7 +51,7 @@ Currently there is only one `!send` command available to the bot. There are plan
 * The injector interface does not use standard controls with the `OWNERDRAW` flag. All interface elements are drawn manually using `double buffer`, but sometimes the interface may flicker. The reason for this is that I am having trouble using the `vgui.lib` library to render the window as `Sven Co-op Dedicated Server` does;
 * There is also a `TABSTOP` system in the interface as is done in standard windows;
 * It seems to me that drawing the interface manually is much faster than restyling the interface via the `OWNERDRAW` flag, especially since not all standard `Windows` elements support this flag;
-* Also, the `SvenDPP.dll` library uses the `OutputDebugString` function hook, so duplicate messages or messages logged by the game may appear on your server in `Discord`;
+* Also, the `SvenDPP.dll` library uses the `OutputDebugString` function hook, so duplicate messages or messages logged by the game may appear on your server in `Discord` (**P.S**: Correction: Only works for your player, since `server.dll` does not import the `OutputDebugString` function);
 * Also in the `Discord` server can be output commands that the player uses in his console. The best option is to use the `SayText` function hook, which will only display messages when the player writes something in the chat. This method will be used in the future;
 * There are also font display issues on older Windows. The window system menu uses `Unicode` characters as text. For example:<br><br>
 ![Screenshot_10](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_10.png)<br><br>
