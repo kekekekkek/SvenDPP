@@ -325,11 +325,11 @@ void CDraw::SetTitle(HWND hWnd, wstring wStrText)
 
 void CDraw::UpdateFocus(int iCurKey, int iElemNum)
 {
-	if (g_Input.GetCurKey() == VK_TAB
+	if (iCurKey == VK_TAB
 		&& !GetAsyncKeyState(VK_SHIFT))
 		NextFocus(iElemNum);
 
-	if (g_Input.GetCurKey() == VK_TAB
+	if (iCurKey == VK_TAB
 		&& GetAsyncKeyState(VK_SHIFT))
 		PreviousFocus(iElemNum);
 }
