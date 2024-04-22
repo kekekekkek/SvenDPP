@@ -74,6 +74,7 @@ The library that was used is presented below:
 **REMEMBER**: You can click on the button ![Screenshot_11](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_11.png) to get more information on how to use editbox.<br>
 **REMEMBER**: All this functionality could have been done via `Metamod` or `SvenMod`.<br>
 **REMEMBER**: You can inject the library manually and without using `SvenJector.exe`. Only I don't know what happens if you try to inject this library into the `svends.exe` process.<br>
+**P.S**: Yes, the `OutputDebugString` hook will work locally, since `server.dll` does not import it.
 
 # Screenshots
 * Screenshot 1<br><br>
