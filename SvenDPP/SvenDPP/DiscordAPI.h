@@ -2,15 +2,9 @@
 
 struct structDiscord
 {
-	cluster* clBot = nullptr;
-	ULONG64 uChanId = -1;
 	char chMsg[256];
-};
-
-struct structListening
-{
+	ULONG64 uChanId = -1;
 	cluster* clBot = nullptr;
-	function<void(const message_create_t&)> fCallback;
 };
 
 class CDiscordAPI
@@ -18,9 +12,7 @@ class CDiscordAPI
 public:
 	string GetToken();
 	void SetToken(string strValue);
-	void SendMessageAsync(cluster* clBot, snowflake snflChanId, string strMsg);
-	void SendMessageFromDiscord(ClientPrintAllFn fFunc, int iFlag, string strMsg);
-	void RunListening(cluster* clBot, function<void(const message_create_t&)> fFunc);
+	void SendBotMessage(cluster* clBot, snowflake snflChanId, string strMsg);
 
 	cluster* clBot = nullptr;
 

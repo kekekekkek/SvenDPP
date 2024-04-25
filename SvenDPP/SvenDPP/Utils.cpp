@@ -1,5 +1,16 @@
 #include "Include.h"
 
+string CUtils::GetProcName()
+{
+	char chProcName[500];
+	string strProcName = "";
+
+	GetModuleFileNameA(GetModuleHandleA(NULL), chProcName, sizeof(chProcName));
+	strProcName = chProcName;
+
+	return strProcName.erase(0, (strProcName.find_last_of("\\") + 1));
+}
+
 int CUtils::ArgCount(string strCommand)
 {
 	return GetArguments(strCommand).size();
@@ -43,6 +54,23 @@ vector<string> CUtils::GetArguments(string strCommand)
 	}
 
 	return strCommands;
+}
+
+int CUtils::IsWhiteSpace(string strText, int iStart, int iEnd)
+{
+	if (iStart >= iEnd && strText[iEnd] != 34)
+		return -1;
+
+	for (int i = iStart; i < iEnd; i++)
+	{
+		if (strText[i] == 34)
+			continue;
+
+		if (strText[i] != 32)
+			return 0;
+	}
+
+	return 1;
 }
 
 string CUtils::GetRegValueString(HKEY hKey, string strSubKey, string strValue)

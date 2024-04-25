@@ -13,7 +13,7 @@ void Rollup()
 
 void About()
 {
-	MessageBoxA(g_Vars.hSvenJectWnd, "SvenJector by kek\nSvenJector Version: 0.1\n\n----- Edit Guide -----\n\"RMB\" - View the content;\n\"Backspace\" - Delete one character;\n\"Delete\" - Delete the entire line;\n\"Ctrl + V\" - Insert text;\n\"Ctrl + C\" - Copy text.", "About", (MB_OK | MB_ICONINFORMATION));
+	MessageBoxA(g_Vars.hSvenJectWnd, "SvenJector by kek\nSvenJector Version: 0.2\n\n----- Edit Guide -----\n\"RMB\" - View the content;\n\"Backspace\" - Delete one character;\n\"Delete\" - Delete the entire line;\n\"Ctrl + V\" - Insert text;\n\"Ctrl + C\" - Copy text.", "About", (MB_OK | MB_ICONINFORMATION));
 }
 
 void Save()
@@ -26,16 +26,25 @@ void Save()
 	if (g_Utils.SetRegValue(HKEY_CURRENT_USER, L"SOFTWARE\\SvenJector", L"ChannelID", g_Vars.wStrChannelId))
 		iResult++;
 
+	if (g_Utils.SetRegValue(HKEY_CURRENT_USER, L"SOFTWARE\\SvenJector", L"Process", to_wstring(g_Vars.iProc)))
+		iResult++;
+
 	if (iResult == 0)
 		MessageBoxA(g_Vars.hSvenJectWnd, "Error of saving field values.", "SvenJector Error", (MB_OK | MB_ICONERROR));
 
-	if (iResult < 2 && iResult != 0)
+	if (iResult < 3 && iResult != 0)
 		MessageBoxA(g_Vars.hSvenJectWnd, "Error when saving one of the fields.", "SvenJector Error", (MB_OK | MB_ICONERROR));
 }
 
 void Load()
 {
-	HWND hSvenWnd = FindWindowA("SDL_app", "Sven Co-op");
+	HWND hSvenWnd = NULL;
+	
+	if (g_Vars.iProc == 0)
+		hSvenWnd = FindWindowA("SDL_app", "Sven Co-op");
+
+	if (g_Vars.iProc == 1)
+		hSvenWnd = FindWindowA("Surface", NULL);
 
 	if (IsWindow(hSvenWnd))
 	{
@@ -47,10 +56,46 @@ void Load()
 			if (g_Utils.GetBaseModuleHandle(L"SvenDPP.dll", dwProcessId))
 			{
 				g_Draw.bUpdateOnce = false;
-				g_Draw.bDisabled[2] = true;
+				g_Draw.bDisabled[3] = true;
 
-				MessageBoxA(g_Vars.hSvenJectWnd, "The module already injected.", "SvenJector Error", (MB_OK | MB_ICONERROR));
+				MessageBoxA(g_Vars.hSvenJectWnd, "The module is already injected.", "SvenJector Error", (MB_OK | MB_ICONERROR));
 				return;
+			}
+			else
+			{
+				string strProcess = "";
+
+				if (g_Vars.iProc == 0)
+				{
+					strProcess = "svends.exe";
+					hSvenWnd = FindWindowA("Surface", NULL);
+				}
+
+				if (g_Vars.iProc == 1)
+				{
+					strProcess = "svencoop.exe";
+					hSvenWnd = FindWindowA("SDL_app", "Sven Co-op");
+				}
+
+				DWORD dwProcessId = NULL;
+				GetWindowThreadProcessId(hSvenWnd, &dwProcessId);
+
+				if (dwProcessId && g_Utils.GetBaseModuleHandle(L"SvenDPP.dll", dwProcessId))
+				{
+					g_Draw.bUpdateOnce = false;
+					g_Draw.bDisabled[3] = true;
+
+					MessageBoxA(g_Vars.hSvenJectWnd, ("The module is already injected in \"" + strProcess + "\".").c_str(), "SvenJector Error", (MB_OK | MB_ICONERROR));
+					return;
+				}
+				else
+				{
+					if (g_Vars.iProc == 0)
+						hSvenWnd = FindWindowA("SDL_app", "Sven Co-op");
+
+					if (g_Vars.iProc == 1)
+						hSvenWnd = FindWindowA("Surface", NULL);
+				}
 			}
 
 			HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, NULL, dwProcessId);
@@ -130,17 +175,17 @@ void Load()
 						}
 					}
 					else
-						MessageBoxA(g_Vars.hSvenJectWnd, "The game process could not be found! Try to start the game and try to load the module again.", "SvenJector Info", (MB_OK | MB_ICONINFORMATION));
+						MessageBoxA(g_Vars.hSvenJectWnd, ("The " + string(g_Vars.iProc == 0 ? "game" : "sven dedicated server") + " process could not be found! Try to start the " + string(g_Vars.iProc == 0 ? "game" : "sven dedicated server") + " and try to load the module again.").c_str(), "SvenJector Info", (MB_OK | MB_ICONINFORMATION));
 				}
 
 				CloseHandle(hProcess);
 			}
 			else
-				MessageBoxA(g_Vars.hSvenJectWnd, "The game process could not be opened! Try restart the program with administrator rights.", "SvenJector Error", (MB_OK | MB_ICONERROR));
+				MessageBoxA(g_Vars.hSvenJectWnd, ("The " + string(g_Vars.iProc == 0 ? "game" : "sven dedicated server") + " process could not be opened! Try restart the program with administrator rights.").c_str(), "SvenJector Error", (MB_OK | MB_ICONERROR));
 		}
 	}
 	else
-		MessageBoxA(g_Vars.hSvenJectWnd, "The game process could not be found! Try to start the game and try to load the module again.", "SvenJector Info", (MB_OK | MB_ICONINFORMATION));
+		MessageBoxA(g_Vars.hSvenJectWnd, ("The " + string(g_Vars.iProc == 0 ? "game" : "sven dedicated server") + " process could not be found! Try to start the " + string(g_Vars.iProc == 0 ? "game" : "sven dedicated server") + " and try to load the module again.").c_str(), "SvenJector Info", (MB_OK | MB_ICONINFORMATION));
 }
 
 void CDraw::ResetFocus()
@@ -164,6 +209,21 @@ bool CDraw::IsFocusFound()
 	}
 
 	return false;
+}
+
+void CDraw::ResetComboBox()
+{
+	for (int i = 0; i < ARRAYSIZE(bComboBox); i++)
+		bComboBox[i] = false;
+}
+
+bool CDraw::IsComboBoxOpened()
+{
+	for (int i = 0; i < ARRAYSIZE(bComboBox); i++)
+	{
+		if (bComboBox[i])
+			return true;
+	}
 }
 
 void CDraw::EndDraw(HDC hWndDC)
@@ -210,6 +270,12 @@ void CDraw::UpdateFrame(HWND hWnd)
 				NextFocus(i);
 		}
 
+		if (g_Vars.iProc >= ARRAYSIZE(g_Vars.wStrProc))
+			g_Vars.iProc = (ARRAYSIZE(g_Vars.wStrProc) - 1);
+
+		if (g_Vars.iProc <= 0)
+			g_Vars.iProc = 0;
+
 		bUpdateOnce = true;
 	}
 
@@ -218,6 +284,9 @@ void CDraw::UpdateFrame(HWND hWnd)
 		Close();
 		g_Input.ResetCurKey();
 	}
+
+	if (GetForegroundWindow() != hWnd)
+		ResetComboBox();
 
 	if (GetForegroundWindow() != hWnd
 		|| !g_Input.IsMouseHover(hWnd, rcOut))
@@ -246,7 +315,9 @@ void CDraw::DrawFocus(RECT rcRect)
 void CDraw::NextFocus(int iElemNum)
 {
 	int iNextItem = (iElemNum + 1);
+
 	ResetFocus();
+	ResetComboBox();
 
 	if (bDisabled[iNextItem])
 		NextFocus(iNextItem);
@@ -272,21 +343,25 @@ void CDraw::DrawMainFrame(HWND hWnd)
 	DrawRollup(hWnd, 1, &Rollup);
 	DrawAbout(hWnd, 2, &About);
 
-	DrawButton(hWnd, RECT{ 127, 119, 50, 24 }, L"Load", 2, bDisabled[2], &Load);
-	DrawButton(hWnd, RECT{ 182, 119, 50, 24 }, L"Save", 3, bDisabled[3], &Save);
-	DrawButton(hWnd, RECT{ 237, 119, 57, 24 }, L"Cancel", 4, bDisabled[4], &Close);
+	DrawButton(hWnd, RECT{ 127, 151, 50, 24 }, L"Load", 3, bDisabled[3], &Load);
+	DrawButton(hWnd, RECT{ 182, 151, 50, 24 }, L"Save", 4, bDisabled[4], &Save);
+	DrawButton(hWnd, RECT{ 237, 151, 57, 24 }, L"Cancel", 5, bDisabled[5], &Close);
 
-	DrawEdit(hWnd, RECT{ 10, 51, 65, 23 }, 210, 0, L"Token", g_Vars.wStrToken, 125, EDIT_TYPE_DEFAULT);
-	DrawEdit(hWnd, RECT{ 10, 85, 65, 23 }, 210, 1, L"Channel ID", g_Vars.wStrChannelId, 50, EDIT_TYPE_NUMBERSONLY);
+	DrawEdit(hWnd, RECT{ 10, 85, 65, 23 }, 210, 1, L"Token", g_Vars.wStrToken, 125, EDIT_TYPE_DEFAULT);
+	DrawEdit(hWnd, RECT{ 10, 119, 65, 23 }, 210, 2, L"Channel ID", g_Vars.wStrChannelId, 50, EDIT_TYPE_NUMBERSONLY);
 
+	DrawComboBox(hWnd, RECT{ 10, 51, 65, 23 }, 210, 43, 0, g_Vars.iProc, ARRAYSIZE(g_Vars.wStrProc), L"Process", g_Vars.wStrProc);
 	DrawBorder(0, 0, (g_Vars.iWndSizeW - 1), (g_Vars.iWndSizeH - 1), 1, RGB(120, 125, 150), RGB(75, 80, 105), RGB(120, 125, 150), RGB(75, 80, 105));
+
 	EndDraw(hWndDC);
 }
 
 void CDraw::PreviousFocus(int iElemNum)
 {
 	int iPerviousItem = (iElemNum - 1);
+
 	ResetFocus();
+	ResetComboBox();
 
 	if (bDisabled[iPerviousItem])
 		PreviousFocus(iPerviousItem);
@@ -356,6 +431,14 @@ void CDraw::PaintBackground(HWND hWnd, COLORREF cBkColor)
 		DrawRect(rcWndRect, cBkColor);
 }
 
+void CDraw::DrawTriangle(int iX, int iY, COLORREF cColor)
+{
+	DrawRect(RECT{ 25 + iX, 25 + iY, 8, 1 }, cColor);
+	DrawRect(RECT{ 26 + iX, 26 + iY, 6, 1 }, cColor);
+	DrawRect(RECT{ 27 + iX, 27 + iY, 4, 1 }, cColor);
+	DrawRect(RECT{ 28 + iX, 28 + iY, 2, 1 }, cColor);
+}
+
 void CDraw::DrawAbout(HWND hWnd, int iNum, function<void()> fFunc)
 {
 	RECT rcRect = { 0, 11, (g_Vars.iWndSizeW - 55), 25 };
@@ -374,6 +457,7 @@ void CDraw::DrawAbout(HWND hWnd, int iNum, function<void()> fFunc)
 
 			ResetFocus();
 			ResetSysMenu();
+			ResetComboBox();
 
 			bSysMenu[iNum] = true;
 
@@ -442,6 +526,7 @@ void CDraw::DrawClose(HWND hWnd, int iNum, function<void()> fFunc)
 
 			ResetFocus();
 			ResetSysMenu();
+			ResetComboBox();
 
 			bSysMenu[iNum] = true;
 
@@ -510,6 +595,7 @@ void CDraw::DrawRollup(HWND hWnd, int iNum, function<void()> fFunc)
 
 			ResetFocus();
 			ResetSysMenu();
+			ResetComboBox();
 
 			bSysMenu[iNum] = true;
 
@@ -600,7 +686,9 @@ void CDraw::DrawButton(HWND hWnd, RECT rcRect, wstring wStrText, int iNum, bool 
 				rcRect.left += 8;
 
 				OutputText(wStrText, 15, rcRect, RGB(50, 55, 70), RGB(255, 255, 255), (DT_SINGLELINE | DT_LEFT), "Tahoma");
+
 				ResetFocus();
+				ResetComboBox();
 
 				rcRect.top -= 7;
 				rcRect.left -= 8;
@@ -649,7 +737,9 @@ void CDraw::DrawButton(HWND hWnd, RECT rcRect, wstring wStrText, int iNum, bool 
 					rcRect.left += 8;
 
 					OutputText(wStrText, 15, rcRect, RGB(50, 55, 70), RGB(255, 255, 255), (DT_SINGLELINE | DT_LEFT), "Tahoma");
+
 					ResetFocus();
+					ResetComboBox();
 
 					rcRect.top -= 7;
 					rcRect.left -= 8;
@@ -726,121 +816,128 @@ void CDraw::OutputText(wstring wStrText, int iFontHeight, RECT rcRect, COLORREF 
 
 void CDraw::DrawEdit(HWND hWnd, RECT rcRect, int iSize, int iNum, wstring wStrText, wstring& wStrInput, int iMaxSize, int iType)
 {
-	if (g_Input.IsMouseHover(hWnd, rcRect.left, (rcRect.right + iSize + 10), (rcRect.top - 9), (rcRect.bottom + 3)))
+	if (!IsComboBoxOpened())
 	{
-		if (g_Input.IsRightMouseHold())
+		if (g_Input.IsMouseHover(hWnd, rcRect.left, (rcRect.right + iSize + 10), (rcRect.top - 9), (rcRect.bottom + 3)))
 		{
-			ResetFocus();
-			bFocus[iNum] = true;
-
-			if (!wStrInput.empty())
-				MessageBoxW(g_Vars.hSvenJectWnd, wStrInput.c_str(), (L"SvenJector (" + wStrText + L")").c_str(), (MB_OK | MB_ICONINFORMATION));
-
-			g_Input.bIsRightMouseHold = FALSE;
-		}
-
-		if (g_Input.IsLeftMouseHold()
-			|| g_Input.IsRightMouseHold())
-		{
-			ResetFocus();
-			bFocus[iNum] = true;
-		}
-	}
-
-	if (iType == 1)
-	{
-		for (int i = 0; i < wStrInput.length(); i++)
-		{
-			if (!isdigit(wStrInput[i]))
+			if (g_Input.IsRightMouseHold())
 			{
-				wStrInput.clear();
-				break;
+				ResetFocus();
+				ResetComboBox();
+
+				bFocus[iNum] = true;
+
+				if (!wStrInput.empty())
+					MessageBoxW(g_Vars.hSvenJectWnd, wStrInput.c_str(), (L"SvenJector (" + wStrText + L")").c_str(), (MB_OK | MB_ICONINFORMATION));
+
+				g_Input.bIsRightMouseHold = FALSE;
+			}
+
+			if (g_Input.IsLeftMouseHold()
+				|| g_Input.IsRightMouseHold())
+			{
+				ResetFocus();
+				ResetComboBox();
+
+				bFocus[iNum] = true;
 			}
 		}
-	}
 
-	if (bFocus[iNum] && GetForegroundWindow() == hWnd)
-	{
-		UpdateFocus(g_Input.GetCurKey(), iNum);
-
-		if (GetAsyncKeyState(VK_DELETE))
-			wStrInput.clear();
-
-		if ((!GetAsyncKeyState('V') || !GetAsyncKeyState('C'))
-			&& !GetAsyncKeyState(VK_CONTROL))
+		if (iType == 1)
 		{
-			bControl = false;
-
-			if (wStrInput.length() > iMaxSize)
-				wStrInput.erase(iMaxSize, wStrInput.length());
-
-			if (g_Input.GetCurKey() > 0
-				&& g_Input.GetCurKey() <= 127)
+			for (int i = 0; i < wStrInput.length(); i++)
 			{
-				if (g_Input.GetCurKey() == VK_BACK)
+				if (!isdigit(wStrInput[i]))
 				{
-					if (!wStrInput.empty())
-						wStrInput.erase((wStrInput.length() - 1), 1);
+					wStrInput.clear();
+					break;
 				}
-				else
+			}
+		}
+
+		if (bFocus[iNum] && GetForegroundWindow() == hWnd)
+		{
+			UpdateFocus(g_Input.GetCurKey(), iNum);
+
+			if (GetAsyncKeyState(VK_DELETE))
+				wStrInput.clear();
+
+			if ((!GetAsyncKeyState('V') || !GetAsyncKeyState('C'))
+				&& !GetAsyncKeyState(VK_CONTROL))
+			{
+				bControl = false;
+
+				if (wStrInput.length() > iMaxSize)
+					wStrInput.erase(iMaxSize, wStrInput.length());
+
+				if (g_Input.GetCurKey() > 0
+					&& g_Input.GetCurKey() <= 127)
 				{
-					if (wStrInput.length() < iMaxSize)
+					if (g_Input.GetCurKey() == VK_BACK)
 					{
-						if (iType == 1)
+						if (!wStrInput.empty())
+							wStrInput.erase((wStrInput.length() - 1), 1);
+					}
+					else
+					{
+						if (wStrInput.length() < iMaxSize)
 						{
-							if (isdigit(g_Input.iCurKeyPressed))
-								wStrInput += g_Input.iCurKeyPressed;
+							if (iType == 1)
+							{
+								if (isdigit(g_Input.iCurKeyPressed))
+									wStrInput += g_Input.iCurKeyPressed;
+							}
+							else
+							{
+								if (g_Input.GetCurKey() != VK_TAB)
+									wStrInput += g_Input.iCurKeyPressed;
+							}
 						}
-						else
+					}
+
+					g_Input.ResetCurKey();
+				}
+			}
+			else
+			{
+				if (!bControl)
+				{
+					if (GetAsyncKeyState('V')
+						&& GetAsyncKeyState(VK_CONTROL))
+					{
+						if (OpenClipboard(hWnd))
 						{
-							if (g_Input.GetCurKey() != VK_TAB)
-								wStrInput += g_Input.iCurKeyPressed;
+							HANDLE hText = GetClipboardData(CF_UNICODETEXT);
+
+							if (hText != NULL && hText != INVALID_HANDLE_VALUE)
+								wStrInput.insert(wStrInput.length(), (wchar_t*)hText);
+
+							CloseClipboard();
 						}
+
+						bControl = true;
+					}
+
+					if (GetAsyncKeyState('C')
+						&& GetAsyncKeyState(VK_CONTROL))
+					{
+						if (OpenClipboard(hWnd))
+						{
+							HANDLE hText = GetClipboardData(CF_UNICODETEXT);
+							void* pMemory = malloc(((wStrInput.length() + 1) * 2));
+
+							wcscpy_s((wchar_t*)pMemory, (wStrInput.length() + 1), wStrInput.c_str());
+							SetClipboardData(CF_UNICODETEXT, pMemory);
+
+							CloseClipboard();
+						}
+
+						bControl = true;
 					}
 				}
 
 				g_Input.ResetCurKey();
 			}
-		}
-		else
-		{
-			if (!bControl)
-			{
-				if (GetAsyncKeyState('V')
-					&& GetAsyncKeyState(VK_CONTROL))
-				{
-					if (OpenClipboard(hWnd))
-					{
-						HANDLE hText = GetClipboardData(CF_UNICODETEXT);
-
-						if (hText != NULL && hText != INVALID_HANDLE_VALUE)
-							wStrInput.insert(wStrInput.length(), (wchar_t*)hText);
-
-						CloseClipboard();
-					}
-
-					bControl = true;
-				}
-
-				if (GetAsyncKeyState('C')
-					&& GetAsyncKeyState(VK_CONTROL))
-				{
-					if (OpenClipboard(hWnd))
-					{
-						HANDLE hText = GetClipboardData(CF_UNICODETEXT);
-						void* pMemory = malloc(((wStrInput.length() + 1) * 2));
-
-						wcscpy_s((wchar_t*)pMemory, (wStrInput.length() + 1), wStrInput.c_str());
-						SetClipboardData(CF_UNICODETEXT, pMemory);
-
-						CloseClipboard();
-					}
-
-					bControl = true;
-				}
-			}
-
-			g_Input.ResetCurKey();
 		}
 	}
 
@@ -874,4 +971,146 @@ void CDraw::OutputText(wstring wStrText, int iFontHeight, RECT rcRect, COLORREF 
 
 	DrawTextW(hMemDC, wStrText.c_str(), -1, &rcRect, uFormat);
 	DeleteObject(hFont);
+}
+
+void CDraw::DrawComboBox(HWND hWnd, RECT rcRect, int iWidth, int iHeight, int iNum, int& iCurElem, int iArraySize, wstring wStrText, wstring* wStrValues)
+{
+	if (bFocus[iNum] && bComboBox[iNum])
+	{
+		RECT rcComboBox = { (rcRect.left + 75), (rcRect.top + (rcRect.bottom - 2)), 0, iHeight };
+		DrawRect(RECT{ rcComboBox.left, rcComboBox.top, iWidth, rcComboBox.bottom }, RGB(50, 55, 70));
+
+		rcRect.left += 82;
+		rcRect.right += (iWidth - 75);
+		rcRect.top += (rcRect.bottom + 2);
+
+		for (int i = 0; i < iArraySize; i++)
+		{
+			rcRect.top += (20 * i);
+
+			if (g_Input.IsMouseHover(hWnd, rcRect.left - 6, (iWidth - 1), (rcRect.top - 2), (rcRect.bottom - 5)))
+			{
+				RECT rcOffset = { };
+				rcOffset.top = (rcRect.top - 1);
+
+				DrawRect(RECT{ rcComboBox.left, rcOffset.top, iWidth, 18 }, RGB(175, 190, 210));
+				OutputText(wStrValues[i], 15, rcRect, RGB(175, 190, 210), RGB(255, 255, 255), (DT_SINGLELINE | DT_LEFT | DT_END_ELLIPSIS));
+
+				if (g_Input.IsLeftMouseHold()
+					|| g_Input.IsRightMouseHold()
+					|| g_Input.KeyPressed(VK_SPACE)
+					|| g_Input.KeyPressed(VK_RETURN))
+					iCurElem = i;
+			}
+			else
+				OutputText(wStrValues[i], 15, rcRect, RGB(50, 55, 70), RGB(215, 230, 250), (DT_SINGLELINE | DT_LEFT | DT_END_ELLIPSIS));
+
+			rcRect.top -= (20 * i);
+		}
+
+		rcRect.left -= 82;
+		rcRect.right -= (iWidth - 75);
+		rcRect.top -= (rcRect.bottom + 2);
+
+		DrawBorder(rcComboBox.left, rcComboBox.top, iWidth, rcComboBox.bottom, 1, RGB(120, 125, 150), RGB(75, 80, 105), RGB(120, 125, 150), RGB(75, 80, 105));
+	}
+
+	OutputText(wStrText, 15, rcRect, RGB(50, 55, 70), (bFocus[iNum] && GetForegroundWindow() == hWnd ? RGB(180, 220, 255) : RGB(192, 192, 192)), (DT_SINGLELINE | DT_RIGHT));
+	DrawBorder((rcRect.left + 75), (rcRect.top - 4), iWidth, rcRect.bottom, 1, RGB(75, 80, 105), RGB(120, 125, 150), RGB(75, 80, 105), RGB(120, 125, 150));
+
+	rcRect.left += 79;
+	rcRect.right += (iWidth - 75);
+
+	(bFocus[iNum] && !bComboBox[iNum] && GetForegroundWindow() == hWnd ? OutputText(wStrValues[iCurElem], 15, rcRect, RGB(175, 190, 210), RGB(255, 255, 255), (DT_SINGLELINE | DT_LEFT | DT_END_ELLIPSIS)) :
+		OutputText(wStrValues[iCurElem], 15, rcRect, RGB(50, 55, 70), RGB(192, 192, 192), (DT_SINGLELINE | DT_LEFT | DT_END_ELLIPSIS)));
+
+	if (bFocus[iNum] && GetForegroundWindow() == hWnd)
+	{
+		UpdateFocus(g_Input.GetCurKey(), iNum);
+
+		if (g_Input.KeyPressed(VK_UP)
+			|| g_Input.KeyPressed(VK_LEFT))
+		{
+			iCurElem--;
+
+			if (iCurElem <= 0)
+				iCurElem = 0;
+
+			ResetComboBox();
+		}
+
+		if (g_Input.KeyPressed(VK_DOWN)
+			|| g_Input.KeyPressed(VK_RIGHT))
+		{
+			iCurElem++;
+
+			if (iCurElem >= iArraySize)
+				iCurElem = (iArraySize - 1);
+
+			ResetComboBox();
+		}
+
+		if (g_Input.KeyPressed(VK_SPACE)
+			|| g_Input.KeyPressed(VK_RETURN))
+			bComboBox[iNum] = !bComboBox[iNum];
+
+		g_Input.ResetCurKey();
+	}
+
+	if (g_Input.IsMouseHover(hWnd, (rcRect.left - iWidth), (rcRect.right + 10), (rcRect.top - 9), (rcRect.bottom + 3)))
+	{
+		if (g_Input.GetMouseWheelDirection() != 0)
+		{
+			if (g_Input.GetMouseWheelDirection() == MOUSEWHEEL_DIR_UP)
+				g_Input.iKeyPressed = VK_UP;
+
+			if (g_Input.GetMouseWheelDirection() == MOUSEWHEEL_DIR_DOWN)
+				g_Input.iKeyPressed = VK_DOWN;
+
+			g_Input.ResetMouseWheelDirection();
+		}
+
+		if (g_Input.IsLeftMouseHold()
+			|| g_Input.IsRightMouseHold())
+		{
+			ResetFocus();
+			ResetComboBox();
+
+			bFocus[iNum] = true;
+		}
+	}
+
+	if (g_Input.IsMouseHover(hWnd, rcRect.left, (rcRect.right + iWidth + 10), (rcRect.top - 9), (rcRect.bottom + 3)))
+	{
+		DrawTriangle((rcRect.right + iWidth - 156), (rcRect.top - 19), RGB(255, 255, 255));
+
+		if (g_Input.IsLeftMouseHold()
+			|| g_Input.IsRightMouseHold())
+		{
+			ResetFocus();
+			ResetComboBox();
+
+			bFocus[iNum] = true;
+			bComboBox[iNum] = true;
+		}
+
+		if (g_Input.GetMouseWheelDirection() != 0)
+		{
+			if (g_Input.GetMouseWheelDirection() == MOUSEWHEEL_DIR_UP)
+				g_Input.iKeyPressed = VK_UP;
+
+			if (g_Input.GetMouseWheelDirection() == MOUSEWHEEL_DIR_DOWN)
+				g_Input.iKeyPressed = VK_DOWN;
+
+			g_Input.ResetMouseWheelDirection();
+		}
+	}
+	else
+	{
+		DrawTriangle((rcRect.right + iWidth - 156), (rcRect.top - 19), (!bComboBox[iNum] ? RGB(215, 230, 250) : RGB(255, 255, 255)));
+
+		if (g_Input.IsLeftMouseHold()
+			|| g_Input.IsRightMouseHold())
+			bComboBox[iNum] = false;
+	}
 }

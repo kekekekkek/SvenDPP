@@ -20,6 +20,7 @@ void Initialization(HINSTANCE hInstance)
 
 	g_Vars.wStrToken = g_Utils.GetRegValueString(HKEY_CURRENT_USER, L"SOFTWARE\\SvenJector", L"Token");
 	g_Vars.wStrChannelId = g_Utils.GetRegValueString(HKEY_CURRENT_USER, L"SOFTWARE\\SvenJector", L"ChannelID");
+	g_Vars.iProc = _wtoi(g_Utils.GetRegValueString(HKEY_CURRENT_USER, L"SOFTWARE\\SvenJector", L"Process").c_str());
 }
 
 LRESULT WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -67,6 +68,9 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		g_Input.iMousePosX = LOWORD(lParam);
 		g_Input.iMousePosY = HIWORD(lParam);
 	}
+
+	if (uMsg == WM_MOUSEWHEEL)
+		(GET_WHEEL_DELTA_WPARAM(wParam) > 0 ? g_Input.iMouseWheel = 1 : g_Input.iMouseWheel = -1);
 
 	return DefWindowProcA(hWnd, uMsg, wParam, lParam);
 }

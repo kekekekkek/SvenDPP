@@ -76,6 +76,19 @@ POINT CInput::GetGlobalCursorPos()
 	return pCursorPos;
 }
 
+int CInput::GetMouseWheelDirection()
+{
+	if (g_Input.iMouseWheel != 0)
+		return g_Input.iMouseWheel;
+
+	return 0;
+}
+
+void CInput::ResetMouseWheelDirection()
+{
+	g_Input.iMouseWheel = 0;
+}
+
 bool CInput::IsMouseHover(HWND hWnd, RECT& rcOut)
 {
 	RECT rcWndPos = g_Utils.GetCurWindowRect(hWnd);

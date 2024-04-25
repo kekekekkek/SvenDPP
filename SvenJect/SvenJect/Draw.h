@@ -9,6 +9,8 @@ public:
 	void ResetFocus();
 	void ResetSysMenu();
 	bool IsFocusFound();
+	void ResetComboBox();
+	bool IsComboBoxOpened();
 	void EndDraw(HDC hWndDC);
 	void BeginDraw(HDC hWndDC);
 	void UpdateFrame(HWND hWnd);
@@ -20,6 +22,7 @@ public:
 	void SetTitle(HWND hWnd, wstring wStrText);
 	void UpdateFocus(int iCurKey, int iElemNum);
 	void DrawRect(RECT rcRect, COLORREF cColor);
+	void DrawTriangle(int iX, int iY, COLORREF cColor);
 	void PaintBackground(HWND hWnd, COLORREF cBkColor);
 	void DrawAbout(HWND hWnd, int iNum, function<void()> fFunc);
 	void DrawClose(HWND hWnd, int iNum, function<void()> fFunc);
@@ -30,15 +33,19 @@ public:
 	void DrawEdit(HWND hWnd, RECT rcRect, int iSize, int iNum, wstring wStrText, wstring& wStrInput, int iMaxSize, int iType);
 	void DrawBorder(int iX, int iY, int iW, int iH, int iSize, COLORREF cLeft, COLORREF cRight, COLORREF cUp, COLORREF cDown);
 	void OutputText(wstring wStrText, int iFontHeight, RECT rcRect, COLORREF cBkColor, COLORREF cTextColor, UINT uFormat, string strFont);
+	void DrawComboBox(HWND hWnd, RECT rcRect, int iWidth, int iHeight, int iNum, int& iCurElem, int iArraySize, wstring wStrText, wstring* wStrValues);
 
 	bool bUpdateOnce = false;
-	bool bDisabled[5]{ false, false, false, false, false };
+	bool bIsKeyPressed = false;
+
+	bool bComboBox[1] = { false };
+	bool bDisabled[6]{ false, false, false, false, false, false };
 
 private:
 	bool bCall = false;
 	bool bControl = false;
 
-	bool bFocus[5]{ false, false, true, false, false };
+	bool bFocus[6]{ false, false, false, true, false, false };
 	bool bSysMenu[3]{ false, false, false };
 
 	HDC hMemDC = NULL;

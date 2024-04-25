@@ -16,6 +16,9 @@
     <ClCompile Include="Utils.cpp">
       <Filter>CPP</Filter>
     </ClCompile>
+    <ClCompile Include="ServerAPI.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Console.h">
@@ -36,6 +39,12 @@
     <ClInclude Include="Vars.h">
       <Filter>H</Filter>
     </ClInclude>
+    <ClInclude Include="SDK\Structs.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerAPI.h">
+      <Filter>H</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CPP">
@@ -46,6 +55,9 @@
     </Filter>
     <Filter Include="Resource">
       <UniqueIdentifier>{93c5123e-3976-4143-b89f-8cdb4a58de69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK">
+      <UniqueIdentifier>{a828cdb7-3b34-481d-b493-8af4cbd6d4c4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

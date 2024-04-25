@@ -23,6 +23,7 @@
     <ClCompile Include="Detours.cpp" />
     <ClCompile Include="DiscordAPI.cpp" />
     <ClCompile Include="DllMain.cpp" />
+    <ClCompile Include="ServerAPI.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -30,6 +31,8 @@
     <ClInclude Include="Detours.h" />
     <ClInclude Include="DiscordAPI.h" />
     <ClInclude Include="Include.h" />
+    <ClInclude Include="SDK\Structs.h" />
+    <ClInclude Include="ServerAPI.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Vars.h" />
   </ItemGroup>
