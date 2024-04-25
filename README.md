@@ -36,7 +36,8 @@ Installing the plugin consists of several steps:
 3. Go back to the `..\Sven Co-op\svencoop` folder and find the `liblist.gam` file there and open it;
 4. After opening the file, insert the line `gamedll “dlls/SvenDPP.dll”` at the end (Otherwise your `game` / `svends.exe` will crash). For example:<br><br>
 ![Screenshot_9](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_9.png)<br><br>
-5. Now after running `svends.exe` the module will be loaded to the server automatically. Also if you run `svencoop.exe` and create your local server, the module will be loaded automatically too.
+5. Now after running `svends.exe` the module will be loaded to the server automatically. Also if you run `svencoop.exe` and create your local server, the module will be loaded automatically too.<br><br>
+You can only use `SvenJect.exe` to save text field values. Just start the injector, fill in all fields and click on the `Save` button. You can also change the registry value for the fields manually. To change the field values you need to open the following path in your `regedit`: `HKEY_CURRENT_USER\SOFTWARE\SvenJector`.
 
 <br>12. After these steps, run the `SvenJect.exe` program. In the `Token` text field specify the `bot token`. In the `Channel ID` text field specify the `channel number`. You can do this using the keys `Ctrl + C` and `Ctrl + V`. The result of copy and paste should look like this:<br><br>
 ![Screenshot_10](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_10.png)<br><br>
@@ -84,7 +85,7 @@ The library that was used is presented below:
 **REMEMBER**: The `text field` has a simple implementation, so it does not have the functionality of standard `Windows` controls.<br>
 **REMEMBER**: You can click on the button ![Screenshot_12](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_12.png) to get more information on how to use editbox.<br>
 **REMEMBER**: All this functionality could have been done via `Metamod` or `SvenMod`.<br>
-**REMEMBER**: You can inject the library manually and without using `SvenJector.exe`. Only I don't know what happens if you try to inject this library into the `svends.exe` process.<br>
+**REMEMBER**: You can inject the library manually and without using `SvenJector.exe`.<br>
 
 # Screenshots
 * Screenshot 1<br><br>
