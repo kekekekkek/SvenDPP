@@ -6,7 +6,7 @@ I will finalize this plugin when I have free time.
 
 # Installation
 Installing the plugin consists of several steps:
-1. Download the [release](https://github.com/kekekekkek/SvenDPP/releases/download/v0.1/SvenDPP.rar) version of the plugin;
+1. Download the [release](https://github.com/kekekekkek/SvenDPP/releases/download/v0.2/SvenDPP.rar) version of the plugin;
 2. `Unzip` the files from the archive to a convenient location;
 3. Go to the root folder of the game (for example `C:\Program Files (x86)\Steam\steamapps\common\Sven Co-op`) and move all modules from the `Sven Co-op` folder to the root directory of the game. Remember, never rename the name of modules (`.dll`);
 4. Now you will need to `create` your `bot` in discord and add it to your server. Go to this [link](https://discord.com/developers/applications) and click the `New Application` button;<br><br>
