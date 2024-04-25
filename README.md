@@ -2,7 +2,8 @@
 This plugin, similar to the [gus](https://github.com/incognico/gus) plugin, allows your discord server to communicate with the `Sven Co-op game server`. Unlike [gus](https://github.com/incognico/gus), this plugin can be used on any of your servers.<br><br>
 This plugin is not the `final version`, it is not `multifunctional` and has `many problems` including game crashes. This is only a test plugin at the moment.<br><br>
 This plugin is so called because it uses the `DPP` (`Discord Plus Plus`) library.<br>
-I will finalize this plugin when I have free time.
+I will finalize this plugin when I have free time.<br><br>
+You can add additional features to this plugin, such as the use of `ChatGPT`
 
 # Installation
 Installing the plugin consists of several steps:
