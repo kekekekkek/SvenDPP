@@ -2,11 +2,12 @@
 This plugin, similar to the [gus](https://github.com/incognico/gus) plugin, allows your discord server to communicate with the `Sven Co-op game server`. Unlike [gus](https://github.com/incognico/gus), this plugin can be used on any of your servers.<br><br>
 This plugin is not the `final version`, it is not `multifunctional` and has `many problems` including game crashes. This is only a test plugin at the moment.<br><br>
 This plugin is so called because it uses the `DPP` (`Discord Plus Plus`) library.<br>
-I will finalize this plugin when I have free time.
+I will finalize this plugin when I have free time.<br><br>
+You can add additional features to this plugin, such as the use of `ChatGPT`
 
 # Installation
 Installing the plugin consists of several steps:
-1. Download the [release](https://github.com/kekekekkek/SvenDPP/releases/download/v0.1/SvenDPP.rar) version of the plugin;
+1. Download the [release](https://github.com/kekekekkek/SvenDPP/releases/download/v0.2/SvenDPP.rar) version of the plugin;
 2. `Unzip` the files from the archive to a convenient location;
 3. Go to the root folder of the game (for example `C:\Program Files (x86)\Steam\steamapps\common\Sven Co-op`) and move all modules from the `Sven Co-op` folder to the root directory of the game. Remember, never rename the name of modules (`.dll`);
 4. Now you will need to `create` your `bot` in discord and add it to your server. Go to this [link](https://discord.com/developers/applications) and click the `New Application` button;<br><br>
@@ -36,7 +37,9 @@ Installing the plugin consists of several steps:
 3. Go back to the `..\Sven Co-op\svencoop` folder and find the `liblist.gam` file there and open it;
 4. After opening the file, insert the line `gamedll “dlls/SvenDPP.dll”` at the end (Otherwise your `game` / `svends.exe` will crash). For example:<br><br>
 ![Screenshot_9](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_9.png)<br><br>
-5. Now after running `svends.exe` the module will be loaded to the server automatically. Also if you run `svencoop.exe` and create your local server, the module will be loaded automatically too.
+5. Now after running `svends.exe` the module will be loaded to the server automatically. Also if you run `svencoop.exe` and create your local server, the module will be loaded automatically too.<br><br>
+You can only use `SvenJect.exe` to save text field values. Just start the injector, fill in all fields and click on the `Save` button. You can also change the registry value for the fields manually. To change the field values you need to open the following path in your `regedit`: `HKEY_CURRENT_USER\SOFTWARE\SvenJector`.<br><br>
+Also, if you decide to go straight to step two, you will need to create a `SvenJector` section in the registry. In it you will need to create fields of type `REG_SZ`: `ChannelID` and `Token` and write the relevant values there.
 
 <br>12. After these steps, run the `SvenJect.exe` program. In the `Token` text field specify the `bot token`. In the `Channel ID` text field specify the `channel number`. You can do this using the keys `Ctrl + C` and `Ctrl + V`. The result of copy and paste should look like this:<br><br>
 ![Screenshot_10](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_10.png)<br><br>
@@ -84,7 +87,7 @@ The library that was used is presented below:
 **REMEMBER**: The `text field` has a simple implementation, so it does not have the functionality of standard `Windows` controls.<br>
 **REMEMBER**: You can click on the button ![Screenshot_12](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_12.png) to get more information on how to use editbox.<br>
 **REMEMBER**: All this functionality could have been done via `Metamod` or `SvenMod`.<br>
-**REMEMBER**: You can inject the library manually and without using `SvenJector.exe`. Only I don't know what happens if you try to inject this library into the `svends.exe` process.<br>
+**REMEMBER**: You can inject the library manually and without using `SvenJector.exe`.<br>
 
 # Screenshots
 * Screenshot 1<br><br>
