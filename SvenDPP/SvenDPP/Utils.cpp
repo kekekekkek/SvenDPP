@@ -11,6 +11,30 @@ string CUtils::GetProcName()
 	return strProcName.erase(0, (strProcName.find_last_of("\\") + 1));
 }
 
+bool CUtils::IsNaN(string strValue)
+{
+	int iPointCount = 0;
+
+	for (int i = 0; i < strValue.length(); i++)
+	{
+		if (i == 0 && strValue[i] == '-')
+			continue;
+
+		if (strValue[i] == '.')
+		{
+			iPointCount++;
+
+			if (iPointCount < 2)
+				continue;
+		}
+
+		if (!isdigit(strValue[i]))
+			return true;
+	}
+
+	return false;
+}
+
 int CUtils::ArgCount(string strCommand)
 {
 	return GetArguments(strCommand).size();

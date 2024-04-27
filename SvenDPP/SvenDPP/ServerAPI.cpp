@@ -1,5 +1,11 @@
 #include "Include.h"
 
+void CServerAPI::Execute(string strCommand)
+{
+	pServerFuncs->pfnServerCommand(strCommand.c_str());
+	pServerFuncs->pfnServerExecute();
+}
+
 void CServerAPI::ClientPrintAll(string strMsg)
 {
 	pServerFuncs->pfnMessageBegin(MSG_ALL, SayText, NULL, NULL);
@@ -11,6 +17,14 @@ enginefuncs_s* CServerAPI::Initialization(HMODULE hServer)
 {
 	pServerFuncs = (enginefuncs_t*)((DWORD)hServer + 0x563C80);
 	return pServerFuncs;
+}
+
+void CServerAPI::SetVariable(string strCVar, string strValue)
+{
+	if (g_Utils.IsNaN(strValue))
+		g_ServerAPI.pServerFuncs->pfnCVarSetString(strCVar.c_str(), strValue.c_str());
+	else
+		g_ServerAPI.pServerFuncs->pfnCVarSetFloat(strCVar.c_str(), atof(strValue.c_str()));
 }
 
 void CServerAPI::RegisterVariable(string strName, string strDefValue)

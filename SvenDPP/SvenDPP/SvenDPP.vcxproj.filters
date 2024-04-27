@@ -4,9 +4,6 @@
     <ClCompile Include="Console.cpp">
       <Filter>CPP</Filter>
     </ClCompile>
-    <ClCompile Include="Detours.cpp">
-      <Filter>CPP</Filter>
-    </ClCompile>
     <ClCompile Include="DiscordAPI.cpp">
       <Filter>CPP</Filter>
     </ClCompile>
@@ -22,9 +19,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Console.h">
-      <Filter>H</Filter>
-    </ClInclude>
-    <ClInclude Include="Detours.h">
       <Filter>H</Filter>
     </ClInclude>
     <ClInclude Include="DiscordAPI.h">

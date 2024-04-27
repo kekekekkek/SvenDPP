@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Console.cpp" />
-    <ClCompile Include="Detours.cpp" />
     <ClCompile Include="DiscordAPI.cpp" />
     <ClCompile Include="DllMain.cpp" />
     <ClCompile Include="ServerAPI.cpp" />
@@ -28,7 +27,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Console.h" />
-    <ClInclude Include="Detours.h" />
     <ClInclude Include="DiscordAPI.h" />
     <ClInclude Include="Include.h" />
     <ClInclude Include="SDK\Structs.h" />
@@ -127,6 +125,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

@@ -4,6 +4,7 @@ class CUtils
 {
 public:
 	string GetProcName();
+	bool IsNaN(string strValue);
 	int ArgCount(string strCommand);
 	int ArgCount(vector<string> strArgs);
 	string ToLowerCase(string strText);
