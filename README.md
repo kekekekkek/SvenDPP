@@ -61,7 +61,7 @@ Currently, only a few commands are available to the bot. There are plans to add 
 **Information**: `SvenJect` uses the standard `gdi32.dll` library to render the control, so you don't need to plug in any dependencies or add additional libraries to your project. The `gdi32.dll` library is always loaded into all processes by default.
 ### [+] SvenDPP:
 **Build type**: `Release/x86`<br>
-**Information**: To compile a `SvenDPP` project, you will need to specify the included directories and libraries in your project properties. You will also need to add the `dpp.lib` library to the linker. Details of the installation process and the library used can be found in the `Additionally` section.
+**Information**: To compile a `SvenDPP` project, you will need to specify the included directories and libraries in the project properties. You also need to add the `dpp.lib` library and the `detours.lib` library to the linker. Also, to learn more about the `DPP` library installation process, see `Additionally`.
 
 # Additionally
 ### [+] About the module and the injector:
