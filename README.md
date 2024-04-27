@@ -52,7 +52,8 @@ Also, if you decide to go straight to step two, you will need to create a `SvenJ
 # Basic Commands
 Currently there is only one `!send` command available to the bot. There are plans to add more commands to interact with the game server in the future. Writing commands is case insensitive.
 ### [+] Commands:
-* `!send %msg%` - Allows you to send messages from your discord to the game server. Messages sent with this command will be displayed to all players on the game server. This is the command you need to write in your discord server. A simple example: `!send Hello from Discord!`.
+* `!send %msg%` - Allows you to send messages from your discord to the game server. Messages sent with this command will be displayed to all players on the game server. This is the command you need to write in your discord server. A simple example: `!send Hello from Discord!`;
+* `!cmd %command%` - Allows you to change the value of any variable on the game server. For example: `!cmd sv_cheats 1`.
   
 # Compile C++
 ### [+] SvenJect:
@@ -82,7 +83,7 @@ The library that was used is presented below:
 **REMEMBER**: You may also have frequent crashes when using it.<br>
 **REMEMBER**: You may also find `junk code` in the source code, which will be removed in the future.<br>
 **REMEMBER**: Also, failures may occur if there is no `token` or `channel id`.<br>
-**REMEMBER**: Crashes can occur if you send too large a message to the server, or if a player writes a large message.<br>
+**REMEMBER**: If your `discord` message that you are trying to send to the game server is too large, it will not be displayed.<br>
 **REMEMBER**: Also, `SvenJect.exe` uses only the `main window` for drawing, so other `dialog boxes` currently use the standard interface.<br>
 **REMEMBER**: The `text field` has a simple implementation, so it does not have the functionality of standard `Windows` controls.<br>
 **REMEMBER**: You can click on the button ![Screenshot_12](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_12.png) to get more information on how to use editbox.<br>
@@ -100,3 +101,7 @@ The library that was used is presented below:
 ![Screenshot_16](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_16.png)
 * Screenshot 5<br><br>
 ![Screenshot_17](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_17.png)
+* Screenshot 6<br><br>
+![Screenshot_18](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_19.png)
+* Screenshot 7<br><br>
+![Screenshot_19](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_18.png)
