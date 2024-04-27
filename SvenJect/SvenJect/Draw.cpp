@@ -281,8 +281,13 @@ void CDraw::UpdateFrame(HWND hWnd)
 
 	if (g_Input.GetCurKey() == VK_ESCAPE)
 	{
-		Close();
-		g_Input.ResetCurKey();
+		if (IsComboBoxOpened())
+			ResetComboBox();
+		else
+		{
+			Close();
+			g_Input.ResetCurKey();
+		}
 	}
 
 	if (GetForegroundWindow() != hWnd)
