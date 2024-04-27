@@ -50,7 +50,7 @@ Also, if you decide to go straight to step two, you will need to create a `SvenJ
 17. Now `you can send messages` to the `game chat` and they will be displayed on `your server in discord`. Other players messages will also be displayed in the discord server.
 
 # Basic Commands
-Currently, only a few commands are available to the bot. There are plans to add more commands to interact with the game server in the future. Writing commands is case insensitive.
+Currently, only a few commands are available to the bot. There are plans to add more commands to interact with the game server in the future. Writing commands is case insensitive.<br><br>If you do not specify an argument to the command, the `discord bot` will show you the relevant error.
 ### [+] Commands:
 * `!send %msg%` - Allows you to send messages from your discord to the game server. Messages sent with this command will be displayed to all players on the game server. This is the command you need to write in your discord server. A simple example: `!send Hello from Discord!`;
 * `!cmd %command%` - Allows you to change the value of any variable on the game server. For example: `!cmd sv_cheats 1`.
