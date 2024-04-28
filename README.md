@@ -35,7 +35,7 @@ Installing the plugin consists of several steps:
 1. Once you have received the `bot token` and copied the `channel digits`, you will need to go to the `..\Sven Co-op\svencoop\dlls` folder;
 2. Move the `SvenDPP.dll` module here;
 3. Go back to the `..\Sven Co-op\svencoop` folder and find the `liblist.gam` file there and open it;
-4. After opening the file, insert the line `gamedll “dlls/SvenDPP.dll”` at the end (Otherwise your `game` / `svends.exe` will crash). For example:<br><br>
+4. After opening the file, insert the line `gamedll “dlls/SvenDPP.dll”` (gamedll "dlls/SvenDPP.dll") at the end (Otherwise your `game` / `svends.exe` will crash). For example:<br><br>
 ![Screenshot_9](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_9.png)<br><br>
 5. Now after running `svends.exe` the module will be loaded to the server automatically. Also if you run `svencoop.exe` and create your local server, the module will be loaded automatically too.<br><br>
 You can only use `SvenJect.exe` to save text field values. Just start the injector, fill in all fields and click on the `Save` button. You can also change the registry value for the fields manually. To change the field values you need to open the following path in your `regedit`: `HKEY_CURRENT_USER\SOFTWARE\SvenJector`.<br><br>
