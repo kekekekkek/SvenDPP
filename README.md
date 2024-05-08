@@ -59,7 +59,7 @@ To be able to view the country of a player who is writing messages in game chat,
 ![Screenshot_21](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_21.png)<br><br>
 5. Copy the contents of the key and paste it into the `Steam API` field in the `SvenJect.exe` program;
 6. After all actions are completed, you will be able to view the country of the player who sent the message in the game chat.<br><br>
-Player country display will not work with the `sv_lan 1` command because of `STEAM_ID_LAN`.<br>
+Player country display will not work with the `sv_lan 1` command because of `STEAM_ID_LAN` or `STEAM_ID_PENDING`.<br>
 Also, in case a player does not have a country specified in his `Steam profile`, then when he writes something in game chat, his country will not be displayed. For example:<br><br>
 ![Screenshot_22](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_22.png)<br><br>
 If `SteamAPI` is missing, the requests will not be executed and the default icons will be displayed instead of the player country icon.<br>
