@@ -7,7 +7,7 @@ You can add additional features to this plugin, such as the use of `ChatGPT`
 
 # Installation
 Installing the plugin consists of several steps:
-1. Download the [release](https://github.com/kekekekkek/SvenDPP/releases/download/v0.3/SvenDPP.rar) version of the plugin;
+1. Download the [release](https://github.com/kekekekkek/SvenDPP/releases/download/v0.4/SvenDPP.rar) version of the plugin;
 2. `Unzip` the files from the archive to a convenient location;
 3. Go to the root folder of the game (for example `C:\Program Files (x86)\Steam\steamapps\common\Sven Co-op`) and move all modules from the `Sven Co-op` folder to the root directory of the game. Remember, never rename the name of modules (`.dll`);
 4. Now you will need to `create` your `bot` in discord and add it to your server. Go to this [link](https://discord.com/developers/applications) and click the `New Application` button;<br><br>
@@ -49,6 +49,19 @@ Also, if you decide to go straight to step two without starting `SvenJect.exe`, 
 16. Never rename the `SvenDPP.dll` module name. Also `SvenDPP.dll` module must be located in the same directory with `SvenJect.exe` injector;<br>
 17. Now `you can send messages` to the `game chat` and they will be displayed on `your server in discord`. Other players messages will also be displayed in the discord server.
 
+# Steam Web API
+In version `0.4` the ability to determine the country of a user when he writes a message in chat was added.<br>
+To be able to view the country of a player who is writing messages in game chat, you will need to follow these steps:
+1. Go to the `Steam` community for developers at this link: https://steamcommunity.com/dev/apikey;
+2. If you need to bind `Steam Guard`, do it;
+3. After binding `Steam Guard`, give a name to your key. In this case I chose the name `SvenDPP`;
+4. Then click on the `Register` button and register your API key. The final result will look like this:<br><br>
+![Screenshot_10](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_21.png)<br><br>
+5. Copy the contents of the key and paste it into the `Steam API` field in the `SvenJect.exe` program;
+6. After all actions are completed, you will be able to view the country of the player who sent the message in the game chat.<br><br>
+Player country display will not work with the `sv_lan 1` command because of `STEAM_ID_LAN`.<br>
+If `SteamAPI` is missing, the requests will not be executed and the default icons will be displayed instead of the player country icon.
+
 # Basic Commands
 Currently, only a few commands are available to the bot. There are plans to add more commands to interact with the game server in the future. Writing commands is case insensitive.<br><br>If you do not specify an argument to the command, the `discord bot` will show you the relevant error.
 ### [+] Commands:
@@ -61,7 +74,7 @@ Currently, only a few commands are available to the bot. There are plans to add 
 **Information**: `SvenJect` uses the standard `gdi32.dll` library to render the control, so you don't need to plug in any dependencies or add additional libraries to your project. The `gdi32.dll` library is always loaded into all processes by default.
 ### [+] SvenDPP:
 **Build type**: `Release/x86`<br>
-**Information**: To compile a `SvenDPP` project, you will need to specify the included directories and libraries in the project properties. You also need to add the `dpp.lib` library and the `detours.lib` library to the linker. Also, to learn more about the `DPP` library installation process, see `Additionally` section.
+**Information**: To compile a `SvenDPP` project, you will need to specify the included directories and libraries in the project properties. You also need to add the `dpp.lib` library, the `wininet.lib` library, and the `detours.lib` library to the linker. Also, to learn more about the `DPP` library installation process, see `Additionally` section.
 
 # Additionally
 ### [+] About the module and the injector:
