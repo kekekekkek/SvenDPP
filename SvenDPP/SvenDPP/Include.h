@@ -9,6 +9,7 @@
 #include <iostream>
 #include <dpp/dpp.h>
 #include <Windows.h>
+#include <wininet.h>
 #include <algorithm>
 
 using namespace std;
@@ -31,9 +32,11 @@ typedef int(__cdecl* UnknownFuncFn3)(const char* chText, const char* chCvar, con
 #include "Console.h"
 #include "ServerAPI.h"
 #include "DiscordAPI.h"
+#include "SteamWebAPI.h"
 
 extern CVars g_Vars;
 extern CUtils g_Utils;
 extern CConsole g_Console;
 extern CServerAPI g_ServerAPI;
 extern CDiscordAPI g_DiscordAPI;
+extern CSteamWebAPI g_SteamWebAPI;

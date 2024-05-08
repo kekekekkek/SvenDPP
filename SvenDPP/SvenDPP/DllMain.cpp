@@ -5,6 +5,7 @@ CUtils g_Utils;
 CConsole g_Console;
 CServerAPI g_ServerAPI;
 CDiscordAPI g_DiscordAPI;
+CSteamWebAPI g_SteamWebAPI;
 
 UnknownFuncFn OrigUnknownFunc = NULL;
 UnknownFuncFn2 OrigUnknownFunc2 = NULL;
@@ -13,8 +14,49 @@ UnknownFuncFn3 OrigUnknownFunc3 = NULL;
 DWORD WINAPI AsyncMessage(LPVOID lpParam)
 {
 	structDiscord* pStructDiscord = (structDiscord*)lpParam;
-	g_DiscordAPI.SendBotMessage(pStructDiscord->clBot, pStructDiscord->uChanId, pStructDiscord->chMsg);
+	string strMsg = pStructDiscord->chMsg;
 
+	if (strMsg.find(":warning:") == string::npos)
+	{
+		if (pStructDiscord->bShowCountry
+			&& !g_SteamWebAPI.GetAPIKey().empty())
+		{
+			string strName = "";
+			string strCountry = "";
+
+			int iFind = strMsg.find_first_of("`");
+
+			if (iFind != string::npos)
+			{
+				for (int i = (iFind + 1); i < strMsg.length(); i++)
+				{
+					if (strMsg[i] == '`')
+						break;
+
+					strName += strMsg[i];
+				}
+			}
+
+			strCountry = g_SteamWebAPI.GetSteamProfileCountry(g_ServerAPI.GetSteamIdByPlayerName(strName));
+
+			if (!strCountry.empty())
+			{
+				int iErase = 0;
+
+				if (strMsg.find(":speech_balloon:") != string::npos)
+					iErase = 16;
+				else if (strMsg.find(":thumbsup:") != string::npos)
+					iErase = 10;
+				else if (strMsg.find(":thumbsdown:") != string::npos)
+					iErase = 12;
+
+				strMsg.erase(0, iErase);
+				strMsg.insert(0, (":flag_" + g_Utils.ToLowerCase(strCountry) + ":"));
+			}
+		}
+	}
+
+	g_DiscordAPI.SendBotMessage(pStructDiscord->clBot, pStructDiscord->uChanId, strMsg);
 	return NULL;
 }
 
@@ -22,6 +64,7 @@ void CreateAsyncMessage(const char* chMsg)
 {
 	structDiscord stDiscord = { };
 
+	stDiscord.bShowCountry = true;
 	stDiscord.clBot = g_DiscordAPI.clBot;
 	stDiscord.uChanId = g_Vars.uChannelId;
 
@@ -34,7 +77,7 @@ void CreateAsyncMessage(const char* chMsg)
 	CloseHandle(hThread);
 }
 
-const char* UnknownFuncHook(const char* chStr1, const char* chStr2, int iSize)
+const char* __cdecl UnknownFuncHook(const char* chStr1, const char* chStr2, int iSize)
 {
 	if (chStr1[0] == 2)
 	{
@@ -64,7 +107,7 @@ const char* UnknownFuncHook(const char* chStr1, const char* chStr2, int iSize)
 	return OrigUnknownFunc(chStr1, chStr2, iSize);
 }
 
-int UnknownFuncHook2(int a1, const char* a2, const char* chPlayerName)
+int __cdecl UnknownFuncHook2(int a1, const char* a2, const char* chPlayerName)
 {
 	if (strstr(a2, "has joined the game")
 		|| strstr(a2, "has left the game"))
@@ -88,7 +131,7 @@ int UnknownFuncHook2(int a1, const char* a2, const char* chPlayerName)
 	return OrigUnknownFunc2(a1, a2, chPlayerName);
 }
 
-int UnknownFuncHook3(const char* chText, const char* chCvar, const char* chValue)
+int __cdecl UnknownFuncHook3(const char* chText, const char* chCvar, const char* chValue)
 {
 	if (strstr(chText, "changed to"))
 	{
@@ -162,16 +205,17 @@ void ListenCommands()
 	clBot.start(st_wait);
 }
 
-bool Initialization(HMODULE hModule)
+void Initialization(HMODULE hModule)
 {
 	if (!hModule)
-		return false;
+		return;
 
 	HMODULE hEngine = GetModuleHandleA("hw.dll");
 	HMODULE hServer = GetModuleHandleA("server.dll");
 
 	g_Vars.strToken = g_Utils.GetRegValueString(HKEY_CURRENT_USER, "SOFTWARE\\SvenJector", "Token");
 	g_Vars.strChannelId = g_Utils.GetRegValueString(HKEY_CURRENT_USER, "SOFTWARE\\SvenJector", "ChannelID");
+	g_Vars.strSteamAPIKey = g_Utils.GetRegValueString(HKEY_CURRENT_USER, "SOFTWARE\\SvenJector", "SteamAPI");
 
 	if (!g_Vars.strChannelId.empty())
 		g_Vars.uChannelId = _atoi64(g_Vars.strChannelId.c_str());
@@ -181,6 +225,7 @@ bool Initialization(HMODULE hModule)
 		&& g_Vars.uChannelId != NULL)
 	{
 		g_ServerAPI.Initialization(hServer);
+		g_SteamWebAPI.SetAPIKey(g_Vars.strSteamAPIKey);
 
 		OrigUnknownFunc = (UnknownFuncFn)DetourFunction((PBYTE)((DWORD)hServer + 0x0D6EB0), (PBYTE)UnknownFuncHook);
 		OrigUnknownFunc2 = (UnknownFuncFn2)DetourFunction((PBYTE)((DWORD)hServer + 0x13DA80), (PBYTE)UnknownFuncHook2);

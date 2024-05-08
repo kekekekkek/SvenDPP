@@ -13,6 +13,16 @@ void CServerAPI::ClientPrintAll(string strMsg)
 	pServerFuncs->pfnMessageEnd();
 }
 
+string CServerAPI::GetSteamIdByPlayerName(string strName)
+{
+	edict_t* pEdict = g_ServerAPI.pServerFuncs->pfnFindEntityByString(NULL, "netname", strName.c_str());
+
+	if (pEdict != NULL)
+		return g_ServerAPI.pServerFuncs->pfnGetPlayerAuthId(pEdict);
+
+	return "";
+}
+
 enginefuncs_s* CServerAPI::Initialization(HMODULE hServer)
 {
 	pServerFuncs = (enginefuncs_t*)((DWORD)hServer + 0x563C80);

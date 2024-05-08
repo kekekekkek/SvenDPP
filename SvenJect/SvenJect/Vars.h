@@ -5,12 +5,13 @@ class CVars
 public:
 	wstring wStrToken = L"";
 	wstring wStrChannelId = L"";
+	wstring wStrSteamAPIKey = L"";
 
 	HWND hSvenJectWnd = NULL;
 	HINSTANCE hCurInstance = NULL;
 
 	int iWndSizeW = 310;
-	int iWndSizeH = 187;
+	int iWndSizeH = 221;
 
 	int iScreenSizeX = 0;
 	int iScreenSizeY = 0;

@@ -5,6 +5,7 @@ struct structDiscord
 	char chMsg[256];
 	ULONG64 uChanId = -1;
 	cluster* clBot = nullptr;
+	bool bShowCountry = false;
 };
 
 class CDiscordAPI

@@ -39,13 +39,13 @@ public:
 	bool bIsKeyPressed = false;
 
 	bool bComboBox[1] = { false };
-	bool bDisabled[6]{ false, false, false, false, false, false };
+	bool bDisabled[7]{ false, false, false, false, false, false, false };
 
 private:
 	bool bCall = false;
 	bool bControl = false;
 
-	bool bFocus[6]{ false, false, false, true, false, false };
+	bool bFocus[7]{ false, false, false, false, true, false, false };
 	bool bSysMenu[3]{ false, false, false };
 
 	HDC hMemDC = NULL;

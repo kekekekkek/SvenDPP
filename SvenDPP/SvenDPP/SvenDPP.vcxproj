@@ -23,6 +23,7 @@
     <ClCompile Include="DiscordAPI.cpp" />
     <ClCompile Include="DllMain.cpp" />
     <ClCompile Include="ServerAPI.cpp" />
+    <ClCompile Include="SteamWebAPI.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -31,6 +32,7 @@
     <ClInclude Include="Include.h" />
     <ClInclude Include="SDK\Structs.h" />
     <ClInclude Include="ServerAPI.h" />
+    <ClInclude Include="SteamWebAPI.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Vars.h" />
   </ItemGroup>
@@ -88,8 +90,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(IncludePath)</IncludePath>
-    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\User\Desktop\Random\SvenJect + SvenDPP\v0.4\SvenDPP\SvenDPP\DPP\include\dpp-10.0;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\User\Desktop\Random\SvenJect + SvenDPP\v0.4\SvenDPP\SvenDPP\DPP\lib\dpp-10.0;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -124,7 +126,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dpp.lib;WinInet.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>

@@ -19,6 +19,7 @@ void Initialization(HINSTANCE hInstance)
 		((g_Vars.iScreenSizeY / 2) - (g_Vars.iWndSizeH / 2)), g_Vars.iWndSizeW, g_Vars.iWndSizeH, "SvenJectWndClass", "SvenJector", NULL, RGB(0, 0, 0));
 
 	g_Vars.wStrToken = g_Utils.GetRegValueString(HKEY_CURRENT_USER, L"SOFTWARE\\SvenJector", L"Token");
+	g_Vars.wStrSteamAPIKey = g_Utils.GetRegValueString(HKEY_CURRENT_USER, L"SOFTWARE\\SvenJector", L"SteamAPI");
 	g_Vars.wStrChannelId = g_Utils.GetRegValueString(HKEY_CURRENT_USER, L"SOFTWARE\\SvenJector", L"ChannelID");
 	g_Vars.iProc = _wtoi(g_Utils.GetRegValueString(HKEY_CURRENT_USER, L"SOFTWARE\\SvenJector", L"Process").c_str());
 }

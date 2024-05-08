@@ -13,7 +13,7 @@ void Rollup()
 
 void About()
 {
-	MessageBoxA(g_Vars.hSvenJectWnd, "SvenJector by kek\nSvenJector Version: 0.2\n\n----- Edit Guide -----\n\"RMB\" - View the content;\n\"Backspace\" - Delete one character;\n\"Delete\" - Delete the entire line;\n\"Ctrl + V\" - Insert text;\n\"Ctrl + C\" - Copy text.", "About", (MB_OK | MB_ICONINFORMATION));
+	MessageBoxA(g_Vars.hSvenJectWnd, "SvenJector by kek\nSvenJector Version: 0.4\n\n----- Edit Guide -----\n\"RMB\" - View the content;\n\"Backspace\" - Delete one character;\n\"Delete\" - Delete the entire line;\n\"Ctrl + V\" - Insert text;\n\"Ctrl + C\" - Copy text.", "About", (MB_OK | MB_ICONINFORMATION));
 }
 
 void Save()
@@ -21,6 +21,9 @@ void Save()
 	int iResult = 0;
 
 	if (g_Utils.SetRegValue(HKEY_CURRENT_USER, L"SOFTWARE\\SvenJector", L"Token", g_Vars.wStrToken))
+		iResult++;
+
+	if (g_Utils.SetRegValue(HKEY_CURRENT_USER, L"SOFTWARE\\SvenJector", L"SteamAPI", g_Vars.wStrSteamAPIKey))
 		iResult++;
 
 	if (g_Utils.SetRegValue(HKEY_CURRENT_USER, L"SOFTWARE\\SvenJector", L"ChannelID", g_Vars.wStrChannelId))
@@ -32,7 +35,7 @@ void Save()
 	if (iResult == 0)
 		MessageBoxA(g_Vars.hSvenJectWnd, "Error of saving field values.", "SvenJector Error", (MB_OK | MB_ICONERROR));
 
-	if (iResult < 3 && iResult != 0)
+	if (iResult < 4 && iResult != 0)
 		MessageBoxA(g_Vars.hSvenJectWnd, "Error when saving one of the fields.", "SvenJector Error", (MB_OK | MB_ICONERROR));
 }
 
@@ -56,7 +59,7 @@ void Load()
 			if (g_Utils.GetBaseModuleHandle(L"SvenDPP.dll", dwProcessId))
 			{
 				g_Draw.bUpdateOnce = false;
-				g_Draw.bDisabled[3] = true;
+				g_Draw.bDisabled[4] = true;
 
 				MessageBoxA(g_Vars.hSvenJectWnd, "The module is already injected.", "SvenJector Error", (MB_OK | MB_ICONERROR));
 				return;
@@ -83,7 +86,7 @@ void Load()
 				if (dwProcessId && g_Utils.GetBaseModuleHandle(L"SvenDPP.dll", dwProcessId))
 				{
 					g_Draw.bUpdateOnce = false;
-					g_Draw.bDisabled[3] = true;
+					g_Draw.bDisabled[4] = true;
 
 					MessageBoxA(g_Vars.hSvenJectWnd, ("The module is already injected in \"" + strProcess + "\".").c_str(), "SvenJector Error", (MB_OK | MB_ICONERROR));
 					return;
@@ -348,16 +351,17 @@ void CDraw::DrawMainFrame(HWND hWnd)
 	DrawRollup(hWnd, 1, &Rollup);
 	DrawAbout(hWnd, 2, &About);
 
-	DrawButton(hWnd, RECT{ 127, 151, 50, 24 }, L"Load", 3, bDisabled[3], &Load);
-	DrawButton(hWnd, RECT{ 182, 151, 50, 24 }, L"Save", 4, bDisabled[4], &Save);
-	DrawButton(hWnd, RECT{ 237, 151, 57, 24 }, L"Cancel", 5, bDisabled[5], &Close);
+	DrawButton(hWnd, RECT{ 127, 185, 50, 24 }, L"Load", 4, bDisabled[4], &Load);
+	DrawButton(hWnd, RECT{ 182, 185, 50, 24 }, L"Save", 5, bDisabled[5], &Save);
+	DrawButton(hWnd, RECT{ 237, 185, 57, 24 }, L"Cancel", 6, bDisabled[6], &Close);
 
 	DrawEdit(hWnd, RECT{ 10, 85, 65, 23 }, 210, 1, L"Token", g_Vars.wStrToken, 125, EDIT_TYPE_DEFAULT);
 	DrawEdit(hWnd, RECT{ 10, 119, 65, 23 }, 210, 2, L"Channel ID", g_Vars.wStrChannelId, 50, EDIT_TYPE_NUMBERSONLY);
 
+	DrawEdit(hWnd, RECT{ 10, 153, 65, 23 }, 210, 3, L"Steam API", g_Vars.wStrSteamAPIKey, 125, EDIT_TYPE_DEFAULT);
 	DrawComboBox(hWnd, RECT{ 10, 51, 65, 23 }, 210, 43, 0, g_Vars.iProc, ARRAYSIZE(g_Vars.wStrProc), L"Process", g_Vars.wStrProc);
-	DrawBorder(0, 0, (g_Vars.iWndSizeW - 1), (g_Vars.iWndSizeH - 1), 1, RGB(120, 125, 150), RGB(75, 80, 105), RGB(120, 125, 150), RGB(75, 80, 105));
 
+	DrawBorder(0, 0, (g_Vars.iWndSizeW - 1), (g_Vars.iWndSizeH - 1), 1, RGB(120, 125, 150), RGB(75, 80, 105), RGB(120, 125, 150), RGB(75, 80, 105));
 	EndDraw(hWndDC);
 }
 

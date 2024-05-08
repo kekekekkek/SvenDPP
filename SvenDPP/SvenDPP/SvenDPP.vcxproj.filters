@@ -16,6 +16,9 @@
     <ClCompile Include="ServerAPI.cpp">
       <Filter>CPP</Filter>
     </ClCompile>
+    <ClCompile Include="SteamWebAPI.cpp">
+      <Filter>CPP</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Console.h">
@@ -37,6 +40,9 @@
       <Filter>SDK</Filter>
     </ClInclude>
     <ClInclude Include="ServerAPI.h">
+      <Filter>H</Filter>
+    </ClInclude>
+    <ClInclude Include="SteamWebAPI.h">
       <Filter>H</Filter>
     </ClInclude>
   </ItemGroup>

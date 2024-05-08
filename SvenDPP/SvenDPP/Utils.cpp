@@ -53,6 +53,39 @@ string CUtils::ToLowerCase(string strText)
 	return strText;
 }
 
+UINT64 CUtils::ToSteamID64(string strSteamId)
+{
+	if (strSteamId.find_last_of(":") != string::npos)
+		return (((stoull(strSteamId.erase(0, (strSteamId.find_last_of(":") + 1))) << 1) | 0x0110000100000000ULL) + 1);
+
+	return NULL;
+}
+
+string CUtils::Parse(string strValue, string strText)
+{
+	int iReadFrom = 0;
+	string strOutput = "";
+
+	if (strValue.empty()
+		|| strText.empty())
+		return strOutput;
+
+	iReadFrom = strText.find(strValue);
+
+	if (iReadFrom == string::npos)
+		return strOutput;
+
+	for (int i = (iReadFrom + strValue.length() + 3); i < strText.length(); i++)
+	{
+		if (strText[i] == 34)
+			break;
+
+		strOutput += strText[i];
+	}
+
+	return strOutput;
+}
+
 vector<string> CUtils::GetArguments(string strCommand)
 {
 	int iArg = 0;
@@ -95,6 +128,45 @@ int CUtils::IsWhiteSpace(string strText, int iStart, int iEnd)
 	}
 
 	return 1;
+}
+
+string CUtils::SendGETRequest(string strServerName, string strGETRequest)
+{
+	string strResult = "";
+
+	HINTERNET hOpen = NULL;
+	HINTERNET hConnect = NULL;
+	HINTERNET hRequest = NULL;
+
+	hOpen = InternetOpenA(NULL, NULL, NULL, NULL, NULL);
+
+	if (hOpen)
+	{
+		hConnect = InternetConnectA(hOpen, strServerName.c_str(), INTERNET_DEFAULT_HTTP_PORT, NULL, NULL, INTERNET_SERVICE_HTTP, NULL, NULL);
+
+		if (hConnect)
+		{
+			hRequest = HttpOpenRequestA(hConnect, "GET", strGETRequest.c_str(), NULL, NULL, NULL, INTERNET_FLAG_KEEP_CONNECTION, NULL);
+
+			if (hRequest)
+			{
+				if (HttpSendRequestA(hRequest, NULL, NULL, NULL, NULL))
+				{
+					char chResult[4096];
+					DWORD dwBytes = NULL;
+
+					if (InternetReadFile(hRequest, chResult, sizeof(chResult), &dwBytes))
+						strResult = chResult;
+				}
+			}
+		}
+	}
+
+	InternetCloseHandle(hOpen);
+	InternetCloseHandle(hConnect);
+	InternetCloseHandle(hRequest);
+
+	return strResult;
 }
 
 string CUtils::GetRegValueString(HKEY hKey, string strSubKey, string strValue)
