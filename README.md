@@ -3,7 +3,7 @@ This plugin, similar to the [gus](https://github.com/incognico/gus) plugin, allo
 This plugin is not the `final version`, it is not `multifunctional` and has `many problems` including game crashes. This is only a test plugin at the moment.<br><br>
 This plugin is so called because it uses the `DPP` (`Discord Plus Plus`) library.<br>
 I will finalize this plugin when I have free time.<br><br>
-You can add additional features to this plugin, such as the use of `ChatGPT`
+You can add additional features to this plugin, such as the use of `ChatGPT`.
 
 # Installation
 Installing the plugin consists of several steps:
@@ -55,7 +55,7 @@ To be able to view the country of a player who is writing messages in game chat,
 1. Go to the `Steam` community for developers at this link: https://steamcommunity.com/dev/apikey;
 2. If you need to bind `Steam Guard`, do it;
 3. After binding `Steam Guard`, give a name to your key. In this case I chose the name `SvenDPP`;
-4. Then click on the `Register` button and register your API key. The final result will look like this:<br><br>
+4. Then click on the `Register` button and register your `API key`. The final result will look like this:<br><br>
 ![Screenshot_10](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_21.png)<br><br>
 5. Copy the contents of the key and paste it into the `Steam API` field in the `SvenJect.exe` program;
 6. After all actions are completed, you will be able to view the country of the player who sent the message in the game chat.<br><br>
