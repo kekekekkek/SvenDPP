@@ -81,7 +81,7 @@ Currently, only a few commands are available to the bot. There are plans to add 
 * The injector interface does not use standard controls with the `OWNERDRAW` flag. All interface elements are drawn manually using `double buffer`, but sometimes the interface may flicker. The reason for this is that I am having trouble using the `vgui.lib` library to render the window as `Sven Co-op Dedicated Server` does;
 * There is also a `TABSTOP` system in the interface as is done in standard windows;
 * It seems to me that drawing the interface manually is much faster than restyling the interface via the `OWNERDRAW` flag, especially since not all standard `Windows` elements support this flag;
-* There are also font display issues on older Windows. The window system menu uses `Unicode` characters as text. For example:<br><br>
+* There are also font display issues on older `Windows`. The window system menu uses `Unicode` characters as text. For example:<br><br>
 ![Screenshot_11](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_11.png)<br><br>
 The `Load`, `Save` and `Cancel` buttons are used for the following purposes:
 * `Load` - used to inject the module into the game process. If your game will not run or there is any error during injection, the program will show you `MessageBox` with the error text;
