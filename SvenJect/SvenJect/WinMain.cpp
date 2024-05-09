@@ -10,6 +10,7 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 void Initialization(HINSTANCE hInstance)
 {
+	HANDLE hMutex = CreateMutexA(NULL, NULL, "SvenJectMutex");
 	g_Vars.hCurInstance = hInstance;
 
 	g_Vars.iScreenSizeX = GetSystemMetrics(SM_CXSCREEN);
@@ -22,6 +23,20 @@ void Initialization(HINSTANCE hInstance)
 	g_Vars.wStrSteamAPIKey = g_Utils.GetRegValueString(HKEY_CURRENT_USER, L"SOFTWARE\\SvenJector", L"SteamAPI");
 	g_Vars.wStrChannelId = g_Utils.GetRegValueString(HKEY_CURRENT_USER, L"SOFTWARE\\SvenJector", L"ChannelID");
 	g_Vars.iProc = _wtoi(g_Utils.GetRegValueString(HKEY_CURRENT_USER, L"SOFTWARE\\SvenJector", L"Process").c_str());
+
+	if (FindWindowA("#32770", "SvenJector Error") != NULL)
+		ExitProcess(NULL);
+
+	if (hMutex != NULL)
+	{
+		if (WaitForSingleObject(hMutex, 0) > 0)
+		{
+			MessageBoxA(NULL, "Cannot run the program. Only one instance of the program can be started at a time.", "SvenJector Error", (MB_OK | MB_ICONERROR));
+			SendMessageA(g_Vars.hSvenJectWnd, WM_QUIT, NULL, NULL);
+
+			ReleaseMutex(hMutex);
+		}
+	}
 }
 
 LRESULT WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -29,7 +44,7 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	if (uMsg == WM_SETTEXT)
 	{
 		g_Draw.bUpdateOnce = false;
-		g_Draw.bDisabled[2] = true;
+		g_Draw.bDisabled[4] = true;
 
 		MessageBoxA(hWnd, (char*)lParam, "SvenJector Info", (MB_OK | MB_ICONINFORMATION));
 		return TRUE;
