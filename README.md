@@ -62,7 +62,7 @@ To be able to view the country of a player who is writing messages in game chat,
 Player country display will not work with the `sv_lan 1` command because of `STEAM_ID_LAN` or `STEAM_ID_PENDING`.<br>
 Also, in case a player does not have a country specified in his `Steam profile`, then when he writes something in game chat, his country will not be displayed. For example:<br><br>
 ![Screenshot_22](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_22.png)<br><br>
-If `SteamAPI` is missing, the requests will not be executed and the default icons will be displayed instead of the player country icon.<br>
+If `SteamAPI` is missing, the requests will not be executed, and instead of the player country icon, the default icons will be displayed when incoming messages are displayed on the server in `Discord`.<br>
 You can also enter the `Steam API Key` manually by creating the `SteamAPI` parameter in your `regedit` under `HKEY_CURRENT_USER\SOFTWARE\SvenJector`.
 
 # Basic Commands
