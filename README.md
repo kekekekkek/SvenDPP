@@ -54,13 +54,16 @@ In version `0.4` the ability to determine the country of a user when he writes a
 To be able to view the country of a player who is writing messages in game chat, you will need to follow these steps:
 1. Go to the `Steam` community for developers at this link: https://steamcommunity.com/dev/apikey;
 2. If you need to bind `Steam Guard`, do it;
-3. After binding `Steam Guard`, give a name to your key. In this case I chose the name `SvenDPP`;
+3. After binding `Steam Guard`, give a name to your key. In this case I chose the name `SvenDPP`. Your key will look something like this: `F211961A57093ED91357EE49B57725EM`;
 4. Then click on the `Register` button and register your `API key`. The final result will look like this:<br><br>
-![Screenshot_10](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_21.png)<br><br>
+![Screenshot_21](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_21.png)<br><br>
 5. Copy the contents of the key and paste it into the `Steam API` field in the `SvenJect.exe` program;
 6. After all actions are completed, you will be able to view the country of the player who sent the message in the game chat.<br><br>
-Player country display will not work with the `sv_lan 1` command because of `STEAM_ID_LAN`.<br>
-If `SteamAPI` is missing, the requests will not be executed and the default icons will be displayed instead of the player country icon.
+Player country display will not work with the `sv_lan 1` command because of `STEAM_ID_LAN` or `STEAM_ID_PENDING`.<br>
+Also, in case a player does not have a country specified in his `Steam profile`, then when he writes something in game chat, his country will not be displayed. For example:<br><br>
+![Screenshot_22](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_22.png)<br><br>
+If `SteamAPI` is missing, the requests will not be executed and the default icons will be displayed instead of the player country icon.<br>
+You can also enter the `Steam API Key` manually by creating the `SteamAPI` parameter in your `regedit` under `HKEY_CURRENT_USER\SOFTWARE\SvenJector`.
 
 # Basic Commands
 Currently, only a few commands are available to the bot. There are plans to add more commands to interact with the game server in the future. Writing commands is case insensitive.<br><br>If you do not specify an argument to the command, the `discord bot` will show you the relevant error.
@@ -115,6 +118,8 @@ The library that was used is presented below:
 * Screenshot 5<br><br>
 ![Screenshot_17](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_17.png)
 * Screenshot 6<br><br>
-![Screenshot_18](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_19.png)
+![Screenshot_19](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_19.png)
 * Screenshot 7<br><br>
-![Screenshot_19](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_18.png)
+![Screenshot_18](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_18.png)
+* Screenshot 8<br><br>
+![Screenshot_20](https://github.com/kekekekkek/SvenDPP/blob/main/Images/Screenshot_20.png)
