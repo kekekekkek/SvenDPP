@@ -227,11 +227,11 @@ void Initialization(HMODULE hModule)
 		g_ServerAPI.Initialization(hServer);
 		g_SteamWebAPI.SetAPIKey(g_Vars.strSteamAPIKey);
 
-		OrigUnknownFunc = (UnknownFuncFn)DetourFunction((PBYTE)((DWORD)hServer + 0x0D6EB0), (PBYTE)UnknownFuncHook);
-		OrigUnknownFunc2 = (UnknownFuncFn2)DetourFunction((PBYTE)((DWORD)hServer + 0x13DA80), (PBYTE)UnknownFuncHook2);
+		OrigUnknownFunc = (UnknownFuncFn)DetourFunction((PBYTE)((DWORD)hServer + 0x0D8990), (PBYTE)UnknownFuncHook);
+		OrigUnknownFunc2 = (UnknownFuncFn2)DetourFunction((PBYTE)((DWORD)hServer + 0x136F70), (PBYTE)UnknownFuncHook2);
 
 		if (hEngine)
-			OrigUnknownFunc3 = (UnknownFuncFn3)DetourFunction((PBYTE)((DWORD)hEngine + 0x669A0), (PBYTE)UnknownFuncHook3);
+			OrigUnknownFunc3 = (UnknownFuncFn3)DetourFunction((PBYTE)((DWORD)hEngine + 0x66EA0), (PBYTE)UnknownFuncHook3);
 
 		g_DiscordAPI.SetToken(g_Vars.strToken);
 		g_DiscordAPI.clBot = new cluster(g_DiscordAPI.GetToken());

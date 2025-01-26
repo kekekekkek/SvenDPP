@@ -25,7 +25,8 @@ string CServerAPI::GetSteamIdByPlayerName(string strName)
 
 enginefuncs_s* CServerAPI::Initialization(HMODULE hServer)
 {
-	pServerFuncs = (enginefuncs_t*)((DWORD)hServer + 0x563C80);
+	//Из "GiveFnptrsToDll"
+	pServerFuncs = (enginefuncs_t*)((DWORD)hServer + 0x4F9CD0);
 	return pServerFuncs;
 }
 
