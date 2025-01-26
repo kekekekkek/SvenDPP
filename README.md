@@ -7,7 +7,7 @@ You can add additional features to this plugin, such as the use of `ChatGPT`.
 
 # Installation
 Installing the plugin consists of several steps:
-1. Download the [release](https://github.com/kekekekkek/SvenDPP/releases/download/v0.4/SvenDPP.rar) version of the plugin;
+1. Download the [release](https://github.com/kekekekkek/SvenDPP/releases/download/v0.4-5.26/SvenDPP.5.26.rar) version of the plugin;
 2. `Unzip` the files from the archive to a convenient location;
 3. Go to the root folder of the game (for example `C:\Program Files (x86)\Steam\steamapps\common\Sven Co-op`) and move all modules from the `Sven Co-op` folder to the root directory of the game. Remember, never rename the name of modules (`.dll`);
 4. Now you will need to `create` your `bot` in discord and add it to your server. Go to this [link](https://discord.com/developers/applications) and click the `New Application` button;<br><br>
@@ -96,6 +96,7 @@ The library that was used is presented below:
 2. Library installation - https://dpp.dev/install-windows-zip.html.
 
 **REMEMBER**: This library is not a `final` product and will be finalized in the future.<br>
+**REMEMBER**: This plugin has problems when displaying messages in russian in `Discord`.<br>
 **REMEMBER**: You may also have frequent crashes when using it.<br>
 **REMEMBER**: You may also find `junk code` in the source code, which will be removed in the future.<br>
 **REMEMBER**: Also, failures may occur if there is no `token` or `channel id`.<br>
